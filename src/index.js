@@ -10,20 +10,21 @@ function isNumber(value) {
   return isNumber;
 }
 
-function add(...numbers) {
-  const containsNaN = numbers.some((number) => !isNumber(number));
+function validateNumberValues(...values) {
+  const containsNaN = values.some((value) => !isNumber(value));
   if (containsNaN) {
     throw new InvalidArgumentError("Input contains non-numeric values");
   }
+}
+
+function add(...numbers) {
+  validateNumberValues(...numbers);
   const sum = numbers.reduce((sum, number) => sum + number);
   return sum;
 }
 
 function subtract(minuend, subtrahend) {
-  const inputIsNaN = !isNumber(minuend) || !isNumber(subtrahend);
-  if (inputIsNaN) {
-    throw new InvalidArgumentError("Input contains non-numeric values");
-  }
+  validateNumberValues(minuend, subtrahend);
   const result = minuend - subtrahend;
   return result;
 }
