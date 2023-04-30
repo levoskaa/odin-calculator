@@ -28,3 +28,9 @@ function subtract(minuend, subtrahend) {
   const result = minuend - subtrahend;
   return result;
 }
+
+function multiply(...numbers) {
+  validateNumberValues(...numbers);
+  const product = numbers.reduce((product, number) => product * number);
+  return product;
+}
