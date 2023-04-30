@@ -5,6 +5,13 @@ class InvalidArgumentError extends Error {
   }
 }
 
+class DivideByZeroError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "DivideByZeroError";
+  }
+}
+
 function isNumber(value) {
   const isNumber = typeof value === "number";
   return isNumber;
@@ -33,4 +40,13 @@ function multiply(...numbers) {
   validateNumberValues(...numbers);
   const product = numbers.reduce((product, number) => product * number);
   return product;
+}
+
+function divide(dividend, divisor) {
+  validateNumberValues(dividend, divisor);
+  if (divisor === 0) {
+    throw new DivideByZeroError();
+  }
+  const quotient = dividend / divisor;
+  return quotient;
 }
