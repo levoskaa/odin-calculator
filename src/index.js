@@ -65,3 +65,7 @@ function operate(operator, operand1, operand2) {
       throw new InvalidArgumentError(`${operator} is not a valid operator`);
   }
 }
+
+let operand1;
+let operand2;
+let operator;
