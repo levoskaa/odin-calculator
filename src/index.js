@@ -50,3 +50,18 @@ function divide(dividend, divisor) {
   const quotient = dividend / divisor;
   return quotient;
 }
+
+function operate(operator, operand1, operand2) {
+  switch (operator) {
+    case "+":
+      return add(operand1, operand2);
+    case "-":
+      return subtract(operand1, operand1);
+    case "*":
+      return multiply(operand1, operand2);
+    case "/":
+      return divide(operand1, operand2);
+    default:
+      throw new InvalidArgumentError(`${operator} is not a valid operator`);
+  }
+}
