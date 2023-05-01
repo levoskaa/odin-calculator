@@ -66,6 +66,29 @@ function operate(operator, operand1, operand2) {
   }
 }
 
-let operand1;
+function onButtonClick() {
+  const value = this.dataset.value;
+  const isNumber = !isNaN(value);
+  if (isNumber) {
+    onNumberClick(value);
+  }
+}
+
+// TODO: handle overflow in the display
+function onNumberClick(digit) {
+  if (displayValue === "0") {
+    displayValue = digit;
+  } else {
+    displayValue += digit;
+  }
+  display.textContent = displayValue;
+}
+
+let displayValue = "0";
 let operand2;
 let operator;
+
+const buttons = document.querySelectorAll(".calculator__button");
+const display = document.querySelector(".calculator__display");
+
+buttons.forEach((button) => button.addEventListener("click", onButtonClick));
