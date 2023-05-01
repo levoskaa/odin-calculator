@@ -77,10 +77,14 @@ function onButtonClick() {
 // TODO: handle overflow in the display
 function onNumberClick(digit) {
   if (displayValue === "0") {
-    displayValue = digit;
+    doDisplayValue(digit);
   } else {
-    displayValue += digit;
+    doDisplayValue(displayValue + digit);
   }
+}
+
+function doDisplayValue(value) {
+  displayValue = value;
   display.textContent = displayValue;
 }
 
