@@ -186,6 +186,33 @@ function containsDecimalPoint(number) {
   return number.toString().indexOf(".") !== -1;
 }
 
+// Maps key presses to the corresponding buttons
+function onKeyDown(e) {
+  if (isNumeric(e.key)) {
+    onNumberInput(e.key);
+    return;
+  }
+  if (ARITHMETIC_OPERATIONS.includes(e.key)) {
+    onArithmeticOperatorInput(e.key);
+    return;
+  }
+  switch (e.key) {
+    case "Backspace":
+      erase();
+      break;
+    case "=":
+    case "Enter":
+      onEqualOperatorInput();
+      break;
+    case "Escape":
+      clear();
+      break;
+    case ".":
+      onDecimalPointInput();
+      break;
+  }
+}
+
 const ARITHMETIC_OPERATIONS = ["+", "-", "*", "/"];
 const CHARACTER_LIMIT = 14;
 
@@ -223,3 +250,5 @@ equalButton.addEventListener("click", onEqualOperatorInput);
 clearButton.addEventListener("click", clear);
 decimalPointButton.addEventListener("click", onDecimalPointInput);
 deleteButton.addEventListener("click", erase);
+
+document.addEventListener("keydown", onKeyDown);
