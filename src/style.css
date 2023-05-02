@@ -85,10 +85,6 @@ body {
   transition: background-color 250ms ease-out;
 }
 
-.calculator__button[data-value="C"] {
-  grid-column: span 2;
-}
-
 .calculator__button[data-value="0"] {
   grid-column: span 2;
 }

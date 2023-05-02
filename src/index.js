@@ -166,6 +166,18 @@ function clear() {
   lastButtonPressed = null;
 }
 
+function erase() {
+  if (
+    lastButtonPressed === ButtonType.ArithmeticOperator ||
+    lastButtonPressed === ButtonType.EqualOperator
+  ) {
+    return;
+  }
+  // If nothing remains after erasure, then we set the display back to 0
+  const newValue = displayValue.slice(0, -1) || "0";
+  doDisplayValue(newValue);
+}
+
 function hasErrored() {
   return displayValue === "Err";
 }
@@ -194,6 +206,7 @@ const clearButton = buttons.find((button) => button.dataset.value === "C");
 const decimalPointButton = buttons.find(
   (button) => button.dataset.value === "."
 );
+const deleteButton = buttons.find((button) => button.dataset.value === "DEL");
 const display = document.querySelector(".calculator__display");
 
 numberButtons.forEach((numberButton) => {
@@ -209,3 +222,4 @@ arithmeticButtons.forEach((arithmeticButton) => {
 equalButton.addEventListener("click", onEqualOperatorInput);
 clearButton.addEventListener("click", clear);
 decimalPointButton.addEventListener("click", onDecimalPointInput);
+deleteButton.addEventListener("click", erase);
