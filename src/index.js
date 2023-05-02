@@ -76,9 +76,11 @@ function operate(operator, operand1, operand2) {
 }
 
 function onNumberInput(digit) {
-  if (displayShouldReset) {
+  if (
+    lastButtonPressed === ButtonType.ArithmeticOperator ||
+    lastButtonPressed === ButtonType.EqualOperator
+  ) {
     doDisplayValue(digit);
-    displayShouldReset = false;
   } else {
     doDisplayValue(displayValue + digit);
   }
@@ -106,7 +108,6 @@ function onArithmeticOperatorInput(operator) {
     savedOperand = +displayValue;
   }
   savedOperator = operator;
-  displayShouldReset = true;
   lastButtonPressed = ButtonType.ArithmeticOperator;
 }
 
@@ -127,7 +128,6 @@ function onEqualOperatorInput() {
     result = "Err";
   }
   doDisplayValue(result);
-  displayShouldReset = true;
   savedOperator = null;
   savedOperand = null;
   lastButtonPressed = ButtonType.EqualOperator;
@@ -156,7 +156,6 @@ function clear() {
   doDisplayValue(displayValue);
   savedOperand = null;
   savedOperator = null;
-  displayShouldReset = true;
   lastButtonPressed = null;
 }
 
@@ -170,7 +169,6 @@ const CHARACTER_LIMIT = 14;
 let displayValue = "0";
 let savedOperand;
 let savedOperator;
-let displayShouldReset = true;
 let lastButtonPressed;
 
 const buttons = Array.from(document.querySelectorAll(".calculator__button"));
