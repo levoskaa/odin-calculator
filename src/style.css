@@ -52,6 +52,7 @@ body {
   background-color: var(--ground-100);
   border: 2px solid var(--ground-0);
   color: var(--ground-900);
+  font-family: "JetBrains Mono", monospace;
   font-size: 2rem;
 }
 
