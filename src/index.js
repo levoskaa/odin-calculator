@@ -78,7 +78,8 @@ function operate(operator, operand1, operand2) {
 function onNumberInput(digit) {
   if (
     lastButtonPressed === ButtonType.ArithmeticOperator ||
-    lastButtonPressed === ButtonType.EqualOperator
+    lastButtonPressed === ButtonType.EqualOperator ||
+    lastButtonPressed == null
   ) {
     doDisplayValue(digit);
   } else {
@@ -133,6 +134,13 @@ function onEqualOperatorInput() {
   lastButtonPressed = ButtonType.EqualOperator;
 }
 
+function onDecimalPointInput() {
+  if (containsDecimalPoint(displayValue)) {
+    return;
+  }
+  doDisplayValue(displayValue + ".");
+}
+
 function doDisplayValue(value) {
   if (isNumeric(value)) {
     value = trimNumber(value, CHARACTER_LIMIT);
@@ -142,13 +150,12 @@ function doDisplayValue(value) {
 }
 
 function trimNumber(number, characterLimit) {
-  // Use parseFloat to remove leading zeros
-  const trimmed = parseFloat(number);
-  const length = trimmed.toString().length;
-  if (length <= characterLimit) {
-    return trimmed.toString();
+  // Remove leading zeros
+  const trimmed = number.toString().replace(/^0+(?=[^.])/, "");
+  if (trimmed.length <= characterLimit) {
+    return trimmed;
   }
-  return trimmed.toExponential(5);
+  return parseFloat(trimmed).toExponential(5);
 }
 
 function clear() {
@@ -161,6 +168,10 @@ function clear() {
 
 function hasErrored() {
   return displayValue === "Err";
+}
+
+function containsDecimalPoint(number) {
+  return number.toString().indexOf(".") !== -1;
 }
 
 const ARITHMETIC_OPERATIONS = ["+", "-", "*", "/"];
@@ -180,6 +191,9 @@ const arithmeticButtons = buttons.filter((button) =>
 );
 const equalButton = buttons.find((button) => button.dataset.value === "=");
 const clearButton = buttons.find((button) => button.dataset.value === "C");
+const decimalPointButton = buttons.find(
+  (button) => button.dataset.value === "."
+);
 const display = document.querySelector(".calculator__display");
 
 numberButtons.forEach((numberButton) => {
@@ -194,3 +208,4 @@ arithmeticButtons.forEach((arithmeticButton) => {
 });
 equalButton.addEventListener("click", onEqualOperatorInput);
 clearButton.addEventListener("click", clear);
+decimalPointButton.addEventListener("click", onDecimalPointInput);
